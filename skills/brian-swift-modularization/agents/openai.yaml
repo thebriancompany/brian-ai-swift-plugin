@@ -1,0 +1,3 @@
+interface:
+  display_name: "Brian Swift Modularization"
+  short_description: "Brian의 개인 컨벤션에 맞춘 SPM 모듈 구성 및 의존성 관리"
