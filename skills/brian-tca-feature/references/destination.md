@@ -178,6 +178,10 @@ import SwiftUI
 struct ParentView: View {
   @Bindable var store: StoreOf<ParentFeature>
 
+  init(_ store: StoreOf<ParentFeature>) {
+    self.store = store
+  }
+
   var body: some View {
     VStack {
       Button("편집") {
@@ -194,7 +198,7 @@ struct ParentView: View {
         action: \.child.destination
       ).editor
     ) { store in
-      EditorView(store: store)
+      EditorView(store)
     }
     .sheet(
       item: $store.scope(
@@ -202,7 +206,7 @@ struct ParentView: View {
         action: \.child.destination
       ).settings
     ) { store in
-      SettingsView(store: store)
+      SettingsView(store)
     }
   }
 }

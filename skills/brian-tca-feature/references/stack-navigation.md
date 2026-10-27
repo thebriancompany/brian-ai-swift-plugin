@@ -157,6 +157,10 @@ import SwiftUI
 struct ParentView: View {
   @Bindable var store: StoreOf<ParentFeature>
 
+  init(_ store: StoreOf<ParentFeature>) {
+    self.store = store
+  }
+
   var body: some View {
     NavigationStack(
       path: $store.scope(
@@ -170,7 +174,7 @@ struct ParentView: View {
     } destination: { store in
       switch store.case {
       case let .editor(store):
-        EditorView(store: store)
+        EditorView(store)
       }
     }
   }

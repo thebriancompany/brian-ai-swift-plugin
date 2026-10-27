@@ -85,6 +85,10 @@ import SwiftUI
 struct SettingsView: View {
   @Bindable var store: StoreOf<SettingsFeature>
 
+  init(_ store: StoreOf<SettingsFeature>) {
+    self.store = store
+  }
+
   var body: some View {
     Form {
       TextField("이름", text: $store.name)

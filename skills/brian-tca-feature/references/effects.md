@@ -294,6 +294,10 @@ import SwiftUI
 struct UsersView: View {
   @Bindable var store: StoreOf<UsersFeature>
 
+  init(_ store: StoreOf<UsersFeature>) {
+    self.store = store
+  }
+
   var body: some View {
     List(store.users) { user in
       Text(user.name)
@@ -386,6 +390,10 @@ import SwiftUI
 @ViewAction(for: UsersFeature.self)
 struct UsersView: View {
   @Bindable var store: StoreOf<UsersFeature>
+
+  init(_ store: StoreOf<UsersFeature>) {
+    self.store = store
+  }
 
   var body: some View {
     List(store.users) { user in

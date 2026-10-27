@@ -130,6 +130,10 @@ import SwiftUI
 struct SearchView: View {
   @Bindable var store: StoreOf<SearchFeature>
 
+  init(_ store: StoreOf<SearchFeature>) {
+    self.store = store
+  }
+
   var body: some View {
     TextField("검색어", text: $store.query)
   }

@@ -137,7 +137,7 @@ public struct ParentFeature {
 
 ## Do: ViewAction과 sheet 바인딩
 
-View에는 `@ViewAction(for: ParentFeature.self)`를 적용한다. UI 이벤트는 `send(.editButtonTapped)`로 전달한다. sheet 클로저의 자식 Store는 `store`로 이름 짓고 `EditorView(store: store)`에 전달한다.
+View에는 `@ViewAction(for: ParentFeature.self)`를 적용한다. UI 이벤트는 `send(.editButtonTapped)`로 전달한다. sheet 클로저의 자식 Store는 `store`로 이름 짓고 `EditorView(store)`에 전달한다.
 
 ```swift
 import ComposableArchitecture
@@ -146,6 +146,10 @@ import SwiftUI
 @ViewAction(for: ParentFeature.self)
 struct ParentView: View {
   @Bindable var store: StoreOf<ParentFeature>
+
+  init(_ store: StoreOf<ParentFeature>) {
+    self.store = store
+  }
 
   var body: some View {
     Button("편집") {
@@ -157,7 +161,7 @@ struct ParentView: View {
         action: \.child.editor
       )
     ) { store in
-      EditorView(store: store)
+      EditorView(store)
     }
   }
 }

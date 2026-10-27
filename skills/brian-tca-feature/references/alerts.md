@@ -146,6 +146,10 @@ import SwiftUI
 struct ItemView: View {
   @Bindable var store: StoreOf<ItemFeature>
 
+  init(_ store: StoreOf<ItemFeature>) {
+    self.store = store
+  }
+
   var body: some View {
     Button("삭제", role: .destructive) {
       send(.deleteButtonTapped)

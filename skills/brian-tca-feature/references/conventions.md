@@ -326,6 +326,52 @@ case let .view(action):
 
 자식 State·Action을 추가하거나 자식 이벤트 처리를 수정할 때 [자식 Feature 연결](child-features.md)을 읽는다. Scope·ifLet·forEach 선택, CombineReducers 구성 및 delegate 처리의 상세 규칙은 해당 문서를 따른다.
 
+## View의 Store 주입
+
+- **분류:** 개인 컨벤션
+- **강도:** 필수
+- **적용 조건:** Feature의 Store를 사용하는 View를 생성하거나 초기화 방식을 수정할 때
+- **규칙:** View는 `init(_ store: StoreOf<Feature>)`를 명시하고 Store를 외부에서 주입받는다. 공개 View는 `public init(_ store: StoreOf<Feature>)`로 노출한다.
+- **Do:** 전달받은 Store를 `self.store = store`로 보관하고 `SomeView(store)`로 호출한다. 자식 View에는 부모에서 scope한 Store를 전달한다.
+- **Don't:** View의 프로퍼티 기본값, initializer 또는 private 생성 헬퍼에서 Store를 새로 만들지 않는다. Store 주입을 숨기는 `public init() {}`나 기본 Store 인자를 추가하지 않으며, `init(store:)`처럼 인자 레이블을 붙이지 않는다.
+- **이유와 예외:** Store 생성과 수명 관리를 호출 측에 두어 부모의 상태·Action 연결과 외부 구성을 유지한다. 앱 진입점이나 Preview 등 구성 지점에서는 Store를 생성해 View에 전달할 수 있다. 이 규칙은 View 생성자에 관한 것으로, reducer인 Feature 자체의 `public init() {}`와 State의 초기화 규칙을 대체하지 않는다.
+- **근거:** 사용자의 View Store 외부 주입 요구 및 `init(_ store: ...)` 표기 결정
+- **검토 버전:** TCA 1.26.2 기준의 컨벤션 예제이며 컴파일은 검증하지 않았다.
+
+### Do: 공개 View의 외부 주입
+
+```swift
+public struct SomeView: View {
+  let store: StoreOf<SomeFeature>
+
+  public init(_ store: StoreOf<SomeFeature>) {
+    self.store = store
+  }
+
+  public var body: some View {
+    Text("화면")
+  }
+}
+```
+
+바인딩이 필요하면 Store를 `@Bindable var store`로 선언하고 동일한 initializer로 주입받는다.
+
+### Don't: View 내부 생성과 빈 공개 initializer
+
+```swift
+public struct SomeView: View {
+  private let store = Store(initialState: SomeFeature.State()) {
+    SomeFeature()
+  }
+
+  public init() {}
+
+  public var body: some View {
+    Text("화면")
+  }
+}
+```
+
 ## View의 UI 이벤트 전달
 
 - **강도:** 필수

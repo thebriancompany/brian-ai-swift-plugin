@@ -16,7 +16,7 @@ description: Brian의 개인 컨벤션에 맞춰 TCA Feature를 작성하거나 
 ## Feature 작성·수정
 
 1. 대상 Feature, 인접 구현, 프로젝트 지침을 확인한다.
-2. [개인 컨벤션](references/conventions.md)의 선언 구성, 정렬, Action 역할과 처리 메서드 규칙을 적용한다. 아래 표에서 작업에 해당하는 참고 자료만 읽는다.
+2. [개인 컨벤션](references/conventions.md)의 선언 구성, 정렬, Action 역할과 처리 메서드 규칙을 적용한다. Feature View는 `init(_ store: StoreOf<Feature>)`로 Store를 외부에서 주입받으며, 공개 View는 이 initializer도 `public`으로 선언한다. 아래 표에서 작업에 해당하는 참고 자료만 읽는다.
 3. 변경한 코드와 관련된 빌드·진단을 가능한 범위에서 확인한다. 확인하지 못한 부분을 검증 완료로 표현하지 않는다.
 
 | 작업 | 참고 자료 |
